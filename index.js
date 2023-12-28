@@ -20,7 +20,7 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* CORS */
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 /* Assign Routes to Server */
 app.use("/api", Routes);
