@@ -14,7 +14,9 @@ const physicalStorage = multer.diskStorage({
   },
 });
 
+const storage = multer.memoryStorage();
+
 // Create a multer instance with the defined storage
-const upload = multer({ storage: physicalStorage });
+const upload = multer({ storage: storage });
 
 export { upload };

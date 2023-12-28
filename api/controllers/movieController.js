@@ -4,13 +4,12 @@ import fs from "fs";
 const addOrUpdateMovie = async (payload, fileDetails, id) => {
   try {
     const { title, publishingYear } = payload;
-    const filePath = fileDetails.path;
+    // const filePath = fileDetails.path;
     let movie = null;
 
-    const fileData = fs.readFileSync(filePath);
-    const dataURI = `data:${fileDetails?.mimetype};base64,${fileData.toString(
-      "base64"
-    )}`;
+    const dataURI = `data:${
+      fileDetails?.mimetype
+    };base64,${fileDetails.buffer.toString("base64")}`;
 
     let movieData = { title, publishingYear, poster: dataURI };
     if (id) {
@@ -23,14 +22,6 @@ const addOrUpdateMovie = async (payload, fileDetails, id) => {
       movie = new Movie(movieData);
       await movie.save();
     }
-
-    fs.unlink(filePath, (unlinkError) => {
-      if (unlinkError) {
-        console.error(`Error deleting file: ${unlinkError.message}`);
-      } else {
-        console.log(`File ${filePath} has been deleted.`);
-      }
-    });
     return movie;
   } catch (error) {
     throw error;
